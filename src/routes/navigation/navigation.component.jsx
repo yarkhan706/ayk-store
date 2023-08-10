@@ -1,5 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
-import {ReactComponent as crownIcon} from "../../assets/crown.svg";
+import './navigation.styles.scss'
+// import { ReactComponent as CrownIcon } from "../../assets/crown.svg";
+
 
 const Navigation = () =>
 {
@@ -7,7 +9,8 @@ const Navigation = () =>
     <>
       <div className="navigation">
         <Link className="nav-logo-container" to = "/">
-         <crownIcon className = "logo"/>
+         {/* <CrownIcon className = "logo"/> */}
+         <img src="src\assets\crown.svg" alt="logo" className="logo"/>
         </Link>
         <div className="nav-links-container">
             <Link className="nav-link" to="shop">
