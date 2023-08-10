@@ -3,7 +3,7 @@ import {googleSignInWithPopup} from '../../utils/firebase/firebase.utils'
 
 const SignIn = () =>
 {
-    //causing error
+    //causing error in console about cross origins
     const logGoogleUser = async () =>
     {
         const response = await googleSignInWithPopup();
