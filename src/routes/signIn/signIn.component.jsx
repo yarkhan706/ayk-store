@@ -3,6 +3,7 @@ import {googleSignInWithPopup} from '../../utils/firebase/firebase.utils'
 
 const SignIn = () =>
 {
+    //causing error
     const logGoogleUser = async () =>
     {
         const response = await googleSignInWithPopup();
