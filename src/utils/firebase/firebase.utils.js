@@ -15,13 +15,14 @@ const firebaseConfig = {
   // Initialize Firebase
   const firebaseApp = initializeApp(firebaseConfig);
 
-  const provider = new GoogleAuthProvider();
-  provider.getCustomParameters({
-    prompt : "select_account"
+  const googleProvider = new GoogleAuthProvider();
+  googleProvider.getCustomParameters({
+    prompt : 'select_account'
   })
 
   export const auth = getAuth();
-  export const googleSignInWithPopup = () => signInWithPopup(auth,provider)
+  export const googleSignInWithPopup = () => signInWithPopup(auth,googleProvider)
+  export const googleSignInWithRedirect = () =>signInWithRedirect(auth,googleProvider)
 
 
   //firebase database
@@ -30,11 +31,8 @@ const firebaseConfig = {
   export const getUserDocumentFromAuth = async (userAuth) => {
     
     const userReference = doc(db,'users',userAuth.uid);
-    console.log(userReference)
 
     const documentSnapShot = await getDoc(userReference);
-    console.log(documentSnapShot)
-    console.log(documentSnapShot.exists())
 
     //if doesnot exits
     if(!documentSnapShot.exists())
