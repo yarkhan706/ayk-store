@@ -28,8 +28,29 @@ const firebaseConfig = {
 
   export const db = getFirestore();
   export const getUserDocumentFromAuth = async (userAuth) => {
+    
     const userReference = doc(db,'users',userAuth.uid);
     console.log(userReference)
-    const getUserReference = await getDoc(userReference);
-    console.log(getUserReference)
+
+    const documentSnapShot = await getDoc(userReference);
+    console.log(documentSnapShot)
+    console.log(documentSnapShot.exists())
+
+    //if doesnot exits
+    if(!documentSnapShot.exists())
+    {
+        const {displayName,email} = userAuth;
+        const createdAt = new Date();
+
+        try{
+            await setDoc(userReference , {displayName,email,createdAt});
+
+        }
+        catch(error)
+        {
+            console.log(error.message)
+        }
+    }
+
+    return userReference;
   }
