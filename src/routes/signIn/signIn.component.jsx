@@ -1,13 +1,13 @@
-import {googleSignInWithPopup} from '../../utils/firebase/firebase.utils'
+import {googleSignInWithPopup,getUserDocumentFromAuth} from '../../utils/firebase/firebase.utils'
 
 
 const SignIn = () =>
 {
-    //causing error in console about cross origins
+    
     const logGoogleUser = async () =>
     {
-        const response = await googleSignInWithPopup();
-        console.log(response)
+        const {user} = await googleSignInWithPopup();
+        getUserDocumentFromAuth(user)
     } 
 
     return(
