@@ -24,10 +24,9 @@ const SignUpForm = () =>{
         }
 
         try{
-            const response = await signUpUserWithEmailAndPassword(email,password)
-            console.log(response)
-
-
+            const {user} = await signUpUserWithEmailAndPassword(email,password);
+            await getUserDocumentFromAuth(user,{displayName})
+            
         }catch(error)
         {
             console.log(error.message)

@@ -26,7 +26,8 @@ const firebaseConfig = {
   //firebase database
 
   export const db = getFirestore();
-  export const getUserDocumentFromAuth = async (userAuth) => {
+  export const getUserDocumentFromAuth = async (userAuth,
+    additionalInformation = {displayName: ''}) => {
     if(!userAuth) return;
     
     const userReference = doc(db,'users',userAuth.uid);
@@ -40,7 +41,8 @@ const firebaseConfig = {
         const createdAt = new Date();
 
         try{
-            await setDoc(userReference , {displayName,email,createdAt});
+            await setDoc(userReference , {displayName,email,createdAt
+            ,...additionalInformation});
 
         }
         catch(error)
