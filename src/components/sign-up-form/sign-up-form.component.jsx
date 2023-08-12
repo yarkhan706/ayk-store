@@ -1,5 +1,6 @@
 import '../sign-up-form/sign-up-form.styles.scss'
 import { useState } from 'react';
+import { signUpUserWithEmailAndPassword , getUserDocumentFromAuth} from '../../utils/firebase/firebase.utils';
 
 const defaultFormFields = {
     displayName:'',
@@ -13,7 +14,25 @@ const SignUpForm = () =>{
     const [formField,setFormField] = useState(defaultFormFields);
     const {displayName,email,password,confirmPassword} = formField;
 
-    console.log(formField)
+    const handleSubmit = async (event) =>
+    {
+        event.preventDefault();
+        if(password != confirmPassword)
+        {
+            alert("PASSWORDS DO NOT MATCHES");
+            return;
+        }
+
+        try{
+            const response = await signUpUserWithEmailAndPassword(email,password)
+            console.log(response)
+
+
+        }catch(error)
+        {
+            console.log(error.message)
+        }
+    } 
 
     const handleChange = (event) =>
     {
@@ -24,7 +43,7 @@ const SignUpForm = () =>{
     return(
         <>
         <h1>SIGN UP WITH YOUR EMAIL AND PASSWORD</h1>
-        <form onSubmit={() => {}}>
+        <form onSubmit={handleSubmit}>
             <label>DISPLAY NAME</label>
             <input type="text" required onChange={handleChange} name='displayName' value={displayName}/>
 
