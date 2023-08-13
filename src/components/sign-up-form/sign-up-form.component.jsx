@@ -1,4 +1,5 @@
 import "../sign-up-form/sign-up-form.styles.scss";
+import Button from "../button/button.component";
 import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import {
@@ -48,8 +49,9 @@ const SignUpForm = () => {
   };
 
   return (
-    <>
-      <h1>SIGN UP WITH YOUR EMAIL AND PASSWORD</h1>
+    <div className="sign-up-container">
+      <h2>Don't have an account?</h2>
+      <span>SIGN UP WITH YOUR EMAIL AND PASSWORD</span>
       <form onSubmit={handleSubmit}>
         <FormInput
           label={"DISPLAY NAME"}
@@ -86,9 +88,9 @@ const SignUpForm = () => {
           name="confirmPassword"
           value={confirmPassword}
         />
-        <button type="submit">SIGN UP</button>
+        <Button type="submit">SIGN UP</Button>
       </form>
-    </>
+    </div>
   );
 };
 
