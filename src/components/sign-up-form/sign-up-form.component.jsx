@@ -53,15 +53,41 @@ const SignUpForm = () => {
       <form onSubmit={handleSubmit}>
         <FormInput
           label={"DISPLAY NAME"}
-          inputInformation={{
-            type: "text",
-            required: true,
-            onChange: handleChange,
-            name: "displayName",
-            value: displayName,
-          }}
+          type="text"
+          required
+          onChange={handleChange}
+          name="displayName"
+          value={displayName}
         />
+
         <FormInput
+          label={"EMAIL"}
+          type="email"
+          required
+          onChange={handleChange}
+          name="email"
+          value={email}
+        />
+
+        <FormInput
+          label={"PASSWORD"}
+          type="password"
+          required
+          onChange={handleChange}
+          name="password"
+          value={password}
+        />
+
+        <FormInput
+          label={"CONFIRM PASSWORD"}
+          type="password"
+          required
+          onChange={handleChange}
+          name="confirmPassword"
+          value={confirmPassword}
+        />
+
+        {/* <FormInput
           label={"EMAIL"}
           inputInformation={{
             type: "email",
@@ -91,7 +117,7 @@ const SignUpForm = () => {
             name: "confirmPassword",
             value: confirmPassword,
           }}
-        />
+        /> */}
 
         {/* <label>EMAIL</label>
         <input
