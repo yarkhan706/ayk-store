@@ -3,7 +3,8 @@ import Button from "../button/button.component";
 import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import {
-  signUpUserWithEmailAndPassword,
+  signInUserWithEmailAndPassword,
+  googleSignInWithPopup,
   getUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
@@ -22,14 +23,27 @@ const SignInForm = () => {
 
   const logGoogleUser = async () => {
     const { user } = await googleSignInWithPopup();
-    const userDocref = getUserDocumentFromAuth(user);
+    getUserDocumentFromAuth(user);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-    } catch (error) {}
+       await signInUserWithEmailAndPassword(email,password)
+      clearFormField();
+    } catch (error) {
+      switch(error.code)
+      {
+        case 'auth/email-already-in-use' : 
+        alert('EMAIL OR PASSWORD NOT MATCH');
+        break;
+        case 'auth/user-not-found':
+          alert('EMAIL DOES NOT EXIST');
+          break;
+          default: alert(error.code);
+      }
+    }
   };
 
   const handleChange = (event) => {
@@ -38,7 +52,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-up-container">
+    <div className="sign-in-container">
       <h2>I Already Have An Account</h2>
       <span>SIGN IN WITH YOUR EMAIL AND PASSWORD</span>
       <form onSubmit={handleSubmit}>
@@ -59,11 +73,13 @@ const SignInForm = () => {
           name="password"
           value={password}
         />
-        <Button type="submit">SIGN UP</Button>
+        <div className="buttons-container">
+          <Button type="submit">SIGN IN</Button>
+          <Button type="button" buttonType={"google"} onClick={logGoogleUser}>
+            GOOGLE SIGN IN
+          </Button>
+        </div>
       </form>
-      <Button buttonType={"google"} onClick={logGoogleUser}>
-        SIGN IN WITH GOOGLE
-      </Button>
     </div>
   );
 };
