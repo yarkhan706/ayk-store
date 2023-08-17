@@ -1,12 +1,13 @@
-import "../sign-in-form/sign-in-form.styles.scss";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/user.context";
 import Button from "../button/button.component";
-import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import {
   signInUserWithEmailAndPassword,
   googleSignInWithPopup,
   getUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
+import "../sign-in-form/sign-in-form.styles.scss";
 
 const defaultFormFields = {
   email: "",
@@ -16,6 +17,7 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formField, setFormField] = useState(defaultFormFields);
   const { email, password } = formField;
+  const { setCurrentUser } = useContext(UserContext);
 
   const clearFormField = () => {
     setFormField(defaultFormFields);
@@ -24,24 +26,29 @@ const SignInForm = () => {
   const logGoogleUser = async () => {
     const { user } = await googleSignInWithPopup();
     getUserDocumentFromAuth(user);
+    setCurrentUser(user);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-       await signInUserWithEmailAndPassword(email,password)
+      const { user } = await signInUserWithEmailAndPassword(email, password);
       clearFormField();
+      setCurrentUser(user);
     } catch (error) {
-      switch(error.code)
-      {
-        case 'auth/email-already-in-use' : 
-        alert('EMAIL OR PASSWORD NOT MATCH');
-        break;
-        case 'auth/user-not-found':
-          alert('EMAIL DOES NOT EXIST');
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("wrong-password");
           break;
-          default: alert(error.code);
+        case "auth/email-already-in-use":
+          alert("EMAIL OR PASSWORD NOT MATCH");
+          break;
+        case "auth/user-not-found":
+          alert("EMAIL DOES NOT EXIST");
+          break;
+        default:
+          console.log(error);
       }
     }
   };
